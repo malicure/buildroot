@@ -1,0 +1,15 @@
+src/posix-io.c:  do not expect a value from closefrom when in linux
+
+Signed-off-by: MaliCure <malicure@malicure.nl>
+
+--- libgpgme-1.15.1/src/posix-io.c	2020-07-15 12:14:17.000000000 +0200
++++ b/libgpgme-1.15.1/src/posix-io.c	2021-09-10 02:08:59.187078164 +0200
+@@ -570,7 +570,7 @@ _gpgme_io_spawn (const char *path, char
+               if (fd_list[i].fd > fd)
+                 fd = fd_list[i].fd;
+             fd++;
+-#if defined(__sun) || defined(__FreeBSD__)
++#if defined(__sun) || defined(__FreeBSD__) || defined(__linux)
+             closefrom (fd);
+             max_fds = fd;
+ #else /*!__sun */
